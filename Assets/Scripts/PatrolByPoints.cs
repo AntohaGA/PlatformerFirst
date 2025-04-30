@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MoverByPoints : MonoBehaviour
+public class PatrolByPoints : MonoBehaviour
 {
     private const float MinDistant = 0.5f;
     private const int Turn = 180;
@@ -14,12 +14,14 @@ public class MoverByPoints : MonoBehaviour
 
     private Transform _nextPoint;
 
+    private Coroutine _moverByPoints;
+
     private void Awake()
     {
-        StartCoroutine(PatrolBetweenTwoPoints());
+        _moverByPoints = StartCoroutine(PatrolBetweenPoints());
     }
 
-    private IEnumerator PatrolBetweenTwoPoints()
+    private IEnumerator PatrolBetweenPoints()
     {
         Vector3 rotate = transform.eulerAngles;
 

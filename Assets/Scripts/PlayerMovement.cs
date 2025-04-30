@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
-    private const float CheckGroundDistant = 0.1f;
-
     [SerializeField] private float _speed;
     [SerializeField] private float jumpForce;
 
@@ -35,11 +33,13 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Approximately(direction, 0) != true)
         {
             transform.localScale = new Vector3(Mathf.Sign(direction), 1, 1);
-        } 
+        }
     }
 
     private void CheckGround()
     {
+        const float CheckGroundDistant = 0.1f;
+
         bool isGrounded;
 
         if (Physics2D.Raycast(transform.position, -Vector2.up, CheckGroundDistant).collider != null)
