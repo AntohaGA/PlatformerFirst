@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MoverByPoints : MonoBehaviour
 {
     private const float MinDistant = 0.5f;
+    private const int Turn = 180;
 
     [SerializeField] private Transform[] _points;
 
@@ -33,7 +33,7 @@ public class MoverByPoints : MonoBehaviour
             if ((transform.position - _nextPoint.position).magnitude < MinDistant)
             {
                 _numberNextPoint = ++_numberNextPoint % _points.Length;
-                rotate.y += 180;
+                rotate.y += Turn;
                 transform.rotation = Quaternion.Euler(rotate);
             }
         }

@@ -16,6 +16,14 @@ public class CoinSpawner : MonoBehaviour
 
     private void SpawnCoin(Transform transformCoin)
     {
-        Instantiate(_coinPrefab, transformCoin.position, Quaternion.identity);
+        Coin newCoin;
+        newCoin = Instantiate(_coinPrefab, transformCoin.position, Quaternion.identity);
+        newCoin.TakedByPlayer += DestroyCoin;
+    }
+
+    private void DestroyCoin(Coin coin)
+    {
+        _coinPrefab.TakedByPlayer -= DestroyCoin;
+        Destroy(coin.gameObject);
     }
 }
