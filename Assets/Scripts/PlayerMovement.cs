@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private Animator _animator;
 
+    private bool isGrounded;
+
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -19,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         CheckGround();
+        Jump();
         Move();
     }
 
@@ -40,22 +43,26 @@ public class PlayerMovement : MonoBehaviour
     {
         const float CheckGroundDistant = 0.1f;
 
-        bool isGrounded;
-
         if (Physics2D.Raycast(transform.position, -Vector2.up, CheckGroundDistant).collider != null)
         {
             isGrounded = true;
-            _animator.SetBool("isJump", false);
         }
         else
         {
             isGrounded = false;
-            _animator.SetBool("isJump", true);
         }
+    }
 
+    private void Jump()
+    {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             _rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            _animator.SetBool("isJump", true);
+        }
+        else
+        {
+            _animator.SetBool("isJump", false);
         }
     }
 }
