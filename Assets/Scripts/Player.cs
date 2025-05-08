@@ -15,6 +15,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        _playerRender.SetParameters(_playerMovement.CurrentDirection, _playerMovement.IsJump);
+        _playerRender.UpdateAnimation(_playerMovement.CurrentDirection, _playerMovement.IsJump);
+    }
+
+    private void FixedUpdate()
+    {
+        _playerMovement.Move();
     }
 }

@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class InputReader : MonoBehaviour
 {
-    public const string Horizontal = "Horizontal";
+    private const string Horizontal = "Horizontal";
 
     private bool _isJump;
-
     public float Direction { get; private set; }
 
-    private void Update()
+    public void CheckInput()
     {
         Direction = Input.GetAxis(Horizontal);
 

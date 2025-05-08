@@ -5,12 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(GroundDetector))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float CurrentDirection;
-    public bool IsJump;
-
     private GroundDetector _groundDetector;
     private InputReader _inputReader;
     private Mover _mover;
+
+    public float CurrentDirection { get ; private set; }
+    public bool IsJump { get; private set; }
 
     private void Awake()
     {
@@ -19,7 +19,12 @@ public class PlayerMovement : MonoBehaviour
         _groundDetector = GetComponent<GroundDetector>();
     }
 
-    public void FixedUpdate()
+    private void Update()
+    {
+        _inputReader.CheckInput();
+    }
+
+    public void Move()
     {
         if (_inputReader.Direction != 0)
         {
@@ -27,22 +32,14 @@ public class PlayerMovement : MonoBehaviour
             CurrentDirection = _inputReader.Direction;
         }
 
-        if (_inputReader.GetIsJump() && _groundDetector.IsGround)
-        {
-            _mover.Jump();
-            IsJump = false;
-        }
-        else
-        {
-            IsJump = true;
-        }
-
         if (_groundDetector.IsGround)
         {
             IsJump = false;
         }
-        else
+
+        if (_inputReader.GetIsJump() && _groundDetector.IsGround)
         {
+            _mover.Jump();
             IsJump = true;
         }
     }

@@ -4,8 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Flipper))]
 public class PlayerRender : MonoBehaviour
 {
-    public static readonly int speed = Animator.StringToHash(nameof(speed));
-    public static readonly int isJump = Animator.StringToHash(nameof(isJump));
+    private static readonly int speed = Animator.StringToHash(nameof(speed));
+    private static readonly int isJump = Animator.StringToHash(nameof(isJump));
 
     private Animator _animator;
     private Flipper _flipper;
@@ -23,7 +23,7 @@ public class PlayerRender : MonoBehaviour
         _flipper.SetDirection(_direction);
     }
 
-    public void SetParameters(float newSpeed, bool isJump)
+    public void UpdateAnimation(float newSpeed, bool isJump)
     {
         _direction = newSpeed;
         _animator.SetFloat(speed, Mathf.Abs(newSpeed));
