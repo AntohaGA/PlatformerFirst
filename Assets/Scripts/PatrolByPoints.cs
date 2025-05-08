@@ -1,43 +1,30 @@
-using System.Collections;
 using UnityEngine;
 
 public class PatrolByPoints : MonoBehaviour
 {
     private const float MinDistant = 0.5f;
-    private const int Turn = 180;
 
     [SerializeField] private Transform[] _points;
 
-    [SerializeField] private float _speed;
-
     private int _numberNextPoint = 0;
-
     private Transform _nextPoint;
 
-    private Coroutine _moverByPoints;
-
-    private void Awake()
+    public float GetDirection()
     {
-        _moverByPoints = StartCoroutine(PatrolBetweenPoints());
+        if (GetNextPoint().position.x > transform.position.x)
+            return 1;
+        else
+            return -1;
     }
-
-    private IEnumerator PatrolBetweenPoints()
+    private Transform GetNextPoint()
     {
-        Vector3 rotate = transform.eulerAngles;
+        _nextPoint = _points[_numberNextPoint];
 
-        while (true)
+        if ((transform.position - _nextPoint.position).magnitude < MinDistant)
         {
-            yield return null;
-
-            _nextPoint = _points[_numberNextPoint];
-            transform.position = Vector2.MoveTowards(transform.position, _nextPoint.position, _speed * Time.deltaTime);
-
-            if ((transform.position - _nextPoint.position).magnitude < MinDistant)
-            {
-                _numberNextPoint = ++_numberNextPoint % _points.Length;
-                rotate.y += Turn;
-                transform.rotation = Quaternion.Euler(rotate);
-            }
+            _numberNextPoint = ++_numberNextPoint % _points.Length;
         }
+
+        return _nextPoint;
     }
 }

@@ -1,68 +1,49 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Mover))]
+[RequireComponent(typeof(InputReader))]
+[RequireComponent(typeof(GroundDetector))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float _speed;
-    [SerializeField] private float jumpForce;
+    public float CurrentDirection;
+    public bool IsJump;
 
-    private Rigidbody2D _rigidBody;
-    private Animator _animator;
+    private GroundDetector _groundDetector;
+    private InputReader _inputReader;
+    private Mover _mover;
 
-    private bool isGrounded;
-
-    private void Start()
+    private void Awake()
     {
-        _rigidBody = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
+        _inputReader = GetComponent<InputReader>();
+        _mover = GetComponent<Mover>();
+        _groundDetector = GetComponent<GroundDetector>();
     }
 
-    private void Update()
+    public void FixedUpdate()
     {
-        CheckGround();
-        Jump();
-        Move();
-    }
-
-    private void Move()
-    {
-        float direction = Input.GetAxis("Horizontal");
-        float distance = direction * _speed * Time.deltaTime;
-
-        transform.Translate(distance * Vector2.right);
-        _animator.SetFloat("speed", Mathf.Abs(direction));
-
-        if (Mathf.Approximately(direction, 0) != true)
+        if (_inputReader.Direction != 0)
         {
-            transform.localScale = new Vector3(Mathf.Sign(direction), 1, 1);
+            _mover.Move(_inputReader.Direction);
+            CurrentDirection = _inputReader.Direction;
         }
-    }
 
-    private void CheckGround()
-    {
-        const float CheckGroundDistant = 0.1f;
-
-        if (Physics2D.Raycast(transform.position, -Vector2.up, CheckGroundDistant).collider != null)
+        if (_inputReader.GetIsJump() && _groundDetector.IsGround)
         {
-            isGrounded = true;
+            _mover.Jump();
+            IsJump = false;
         }
         else
         {
-            isGrounded = false;
+            IsJump = true;
         }
-    }
 
-    private void Jump()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (_groundDetector.IsGround)
         {
-            _rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            _animator.SetBool("isJump", true);
+            IsJump = false;
         }
         else
         {
-            _animator.SetBool("isJump", false);
+            IsJump = true;
         }
     }
 }
