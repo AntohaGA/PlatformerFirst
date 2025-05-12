@@ -16,7 +16,7 @@ public class Flipper : MonoBehaviour
 
     public void SetDirection(float direction)
     {
-        (direction < 0) ?
+       if (direction < 0)
            transform.rotation = _rotateLeft;
         else
             transform.rotation = _rotateRight;
