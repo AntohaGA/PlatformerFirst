@@ -7,6 +7,6 @@ public class CoinLooter : MonoBehaviour
     public void AddCoin(Coin coin)
     {
         _coinCount++;
-        Destroy(coin.gameObject);
+        coin.Destroy();
     }
 }

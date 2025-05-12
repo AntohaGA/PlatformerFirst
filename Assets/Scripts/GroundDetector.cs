@@ -1,21 +1,20 @@
+using System;
 using UnityEngine;
 
 public class GroundDetector : MonoBehaviour
 {
-    const float CheckGroundDistant = 0.1f;
+    public event Action Landed;
+    public event Action Jumped;
 
-    public bool IsGround { get; private set; }
-
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (CheckGround())
-            IsGround = true;
-        else
-            IsGround = false;
+        if (collision.GetComponent<Ground>())
+            Landed?.Invoke();
     }
 
-    private bool CheckGround()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        return (Physics2D.Raycast(transform.position, -Vector2.up, CheckGroundDistant).collider != null);
+        if (collision.GetComponent<Ground>())
+            Jumped?.Invoke();
     }
 }

@@ -9,38 +9,38 @@ public class PlayerMovement : MonoBehaviour
     private InputReader _inputReader;
     private Mover _mover;
 
-    public float CurrentDirection { get ; private set; }
-    public bool IsJump { get; private set; }
+    private bool OnGround;
 
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
         _mover = GetComponent<Mover>();
         _groundDetector = GetComponent<GroundDetector>();
+
+        _inputReader.MovePressed += Move;
+        _inputReader.JumpPressed += Jump;
+        _groundDetector.Landed += SetPlayerOnGround;
+        _groundDetector.Jumped += SetPlayerOnAir;
     }
 
-    private void Update()
+    public void Move(float direction)
     {
-        _inputReader.CheckInput();
+        _mover.Move(direction);
     }
 
-    public void Move()
+    public void Jump()
     {
-        if (_inputReader.Direction != 0)
-        {
-            _mover.Move(_inputReader.Direction);
-            CurrentDirection = _inputReader.Direction;
-        }
-
-        if (_groundDetector.IsGround)
-        {
-            IsJump = false;
-        }
-
-        if (_inputReader.GetIsJump() && _groundDetector.IsGround)
-        {
+        if (OnGround)
             _mover.Jump();
-            IsJump = true;
-        }
+    }
+
+    private void SetPlayerOnGround()
+    {
+        OnGround = true;
+    }
+
+    private void SetPlayerOnAir()
+    {
+        OnGround = false;
     }
 }

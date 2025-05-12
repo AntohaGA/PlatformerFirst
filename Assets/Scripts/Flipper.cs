@@ -2,21 +2,23 @@ using UnityEngine;
 
 public class Flipper : MonoBehaviour
 {
-    private Vector3 _scaleRight;
-    private Vector3 _scaleLeft;
+    const float RotateAngle = 180;
+
+    private Quaternion _rotateRight;
+    private Quaternion _rotateLeft;
      
     private void Awake()
     {
-        _scaleRight = transform.localScale;
-        _scaleLeft = transform.localScale;
-        _scaleLeft.x *= -1;
+        _rotateRight = transform.rotation;
+        _rotateLeft = transform.rotation;
+        _rotateLeft.y += RotateAngle;
     }
 
     public void SetDirection(float direction)
     {
-        if (direction < 0)
-            transform.localScale = _scaleLeft;
+        (direction < 0) ?
+           transform.rotation = _rotateLeft;
         else
-            transform.localScale = _scaleRight;
+            transform.rotation = _rotateRight;
     }
 }

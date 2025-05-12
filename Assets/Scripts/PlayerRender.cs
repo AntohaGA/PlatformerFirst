@@ -2,31 +2,43 @@ using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Flipper))]
+[RequireComponent(typeof(InputReader))]
+[RequireComponent(typeof(GroundDetector))]
 public class PlayerRender : MonoBehaviour
 {
-    private static readonly int speed = Animator.StringToHash(nameof(speed));
-    private static readonly int isJump = Animator.StringToHash(nameof(isJump));
+    private static int s_speed = Animator.StringToHash("speed");
+    private static int s_isJump = Animator.StringToHash("isJump");
 
     private Animator _animator;
     private Flipper _flipper;
-
-    private float _direction;
+    private InputReader _inputReader;
+    private GroundDetector _groundDetector;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _flipper = GetComponent<Flipper>();
+        _inputReader = GetComponent<InputReader>();
+        _groundDetector = GetComponent<GroundDetector>();
+
+        _inputReader.MovePressed += Move;
+        _inputReader.JumpPressed += SetParamJumpTrue;
+        _groundDetector.Landed += SetParamJumpFalse;
     }
 
-    private void Update()
+    private void Move(float direction)
     {
-        _flipper.SetDirection(_direction);
+        _flipper.SetDirection(direction);
+        _animator.SetFloat(s_speed, Mathf.Abs(direction));
     }
 
-    public void UpdateAnimation(float newSpeed, bool isJump)
+    private void SetParamJumpTrue()
     {
-        _direction = newSpeed;
-        _animator.SetFloat(speed, Mathf.Abs(newSpeed));
-        _animator.SetBool(PlayerRender.isJump, isJump);
+        _animator.SetBool(s_isJump, true);
+    }
+
+    private void SetParamJumpFalse()
+    {
+        _animator.SetBool(s_isJump, false);
     }
 }

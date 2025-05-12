@@ -11,11 +11,9 @@ public class PatrolByPoints : MonoBehaviour
 
     public float GetDirection()
     {
-        if (GetNextPoint().position.x > transform.position.x)
-            return 1;
-        else
-            return -1;
+       return GetNextPoint().position.x > transform.position.x ? 1 : -1;
     }
+
     private Transform GetNextPoint()
     {
         _nextPoint = _points[_numberNextPoint];
