@@ -22,8 +22,8 @@ public class PlayerRender : MonoBehaviour
         _groundDetector = GetComponent<GroundDetector>();
 
         _inputReader.MovePressed += Move;
-        _inputReader.JumpPressed += SetParamJumpTrue;
-        _groundDetector.Landed += SetParamJumpFalse;
+        _groundDetector.Landed += LandAnimation;
+        _groundDetector.Jumped += JumpAnimation;
     }
 
     private void Move(float direction)
@@ -32,13 +32,13 @@ public class PlayerRender : MonoBehaviour
         _animator.SetFloat(s_speed, Mathf.Abs(direction));
     }
 
-    private void SetParamJumpTrue()
-    {
-        _animator.SetBool(s_isJump, true);
-    }
-
-    private void SetParamJumpFalse()
+    private void LandAnimation()
     {
         _animator.SetBool(s_isJump, false);
+    }
+
+    private void JumpAnimation()
+    {
+        _animator.SetBool(s_isJump, true);
     }
 }
