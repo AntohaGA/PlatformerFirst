@@ -6,7 +6,7 @@ public class Flipper : MonoBehaviour
 
     private Quaternion _rotateRight;
     private Quaternion _rotateLeft;
-     
+
     private void Awake()
     {
         _rotateRight = transform.rotation;
@@ -16,8 +16,8 @@ public class Flipper : MonoBehaviour
 
     public void SetDirection(float direction)
     {
-       if (direction < 0)
-           transform.rotation = _rotateLeft;
+        if (direction < 0)
+            transform.rotation = _rotateLeft;
         else
             transform.rotation = _rotateRight;
     }

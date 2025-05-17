@@ -7,6 +7,7 @@ public class InputReader : MonoBehaviour
 
     public event Action JumpPressed;
     public event Action<float> MovePressed;
+    public event Action AttackPressed;
 
     public void Update()
     {
@@ -15,5 +16,8 @@ public class InputReader : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
             JumpPressed?.Invoke();
+
+        if (Input.GetKeyUp(KeyCode.F))
+            AttackPressed?.Invoke();
     }
 }
