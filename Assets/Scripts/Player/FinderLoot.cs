@@ -1,28 +1,28 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CoinLooter))]
-[RequireComponent(typeof(HealthLooter))]
+[RequireComponent(typeof(CoinCounter))]
+[RequireComponent(typeof(HealthHero))]
 public class FinderLoot : MonoBehaviour
 {
-    private CoinLooter _coinLooter;
-    private HealthLooter _healthLooter;
+    private CoinCounter _coinCounter;
+    private HealthHero _healthHero;
 
     private void Awake()
     {
-        _coinLooter = GetComponent<CoinLooter>();
-        _healthLooter = GetComponent<HealthLooter>();
+        _coinCounter = GetComponent<CoinCounter>();
+        _healthHero = GetComponent<HealthHero>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out Coin coin))
         {
-            _coinLooter.AddCoin(coin);
+            _coinCounter.AddCoin(coin);
         }
 
         if (collision.TryGetComponent(out Health health))
         {
-            _healthLooter.AddHealth(health);    
+            _healthHero.AddHealth(health);    
         }
     }
 }

@@ -1,28 +1,24 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class PlayerDetector : MonoBehaviour
 {
-    private bool isPlayerIn = false;
-
     public event Action<PlayerMovement> CheckedPlayer;
     public event Action LostPlayer;
-    public event Action Attacked;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isPlayerIn == false && collision.TryGetComponent(out PlayerMovement player))
+        if (collision.TryGetComponent(out PlayerMovement player) && collision.isTrigger == false)
         {
-            isPlayerIn = true;
-            CheckedPlayer?.Invoke(player);  
+            CheckedPlayer?.Invoke(player);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (isPlayerIn && collision.GetComponent<PlayerMovement>())
+        if (collision.GetComponent<PlayerMovement>() && collision.isTrigger == false)
         {
-            isPlayerIn = false;
             LostPlayer?.Invoke();
         }
     }

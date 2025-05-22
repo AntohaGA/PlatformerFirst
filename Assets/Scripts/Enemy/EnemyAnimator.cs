@@ -20,13 +20,18 @@ public class EnemyAnimator : MonoBehaviour
 
     public void HitAnimation()
     {
-        _animator.SetFloat(s_speed, 0);
         _animator.SetTrigger(s_hit);
     }
 
     public void AttackAnimation()
     {
         _animator.SetFloat(s_speed, 0);
-        _animator.SetTrigger(s_attack);
+        _animator.SetBool(s_attack, true);
+    }
+
+    public void StopAttackAnimation()
+    {
+        _animator.SetBool(s_attack, false);
+        _animator.SetFloat(s_speed, 1);
     }
 }

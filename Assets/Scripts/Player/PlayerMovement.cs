@@ -1,37 +1,33 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(InputReader))]
-[RequireComponent(typeof(GroundDetector))]
 [RequireComponent(typeof(PlayerAnimator))]
 [RequireComponent(typeof(Flipper))]
-[RequireComponent(typeof(Attacker))]
-public class PlayerMovement : MonoBehaviour
+[RequireComponent(typeof(FinderLoot))]
+[RequireComponent(typeof(HealthHero))]
+[RequireComponent(typeof(CoinCounter))]
+public class PlayerMovement : MonoBehaviour, IDamagable
 {
     private const float AttackDamage = 10;
 
-    private Vector2 offsetAttack = new Vector2(0.9f, 0.8f);
-
-    private GroundDetector _groundDetector;
-    private InputReader _inputReader;
     private Mover _mover;
+    private InputReader _inputReader;
     private PlayerAnimator _playerAnimator;
     private Flipper _flipper;
-    private Attacker _attacker;
-
-    private float _damage;
+    private HealthHero _healthHero;
+    private GroundDetector _groundDetector;
+    private Damager _damager;
 
     private void Awake()
     {
-        _inputReader = GetComponent<InputReader>();
         _mover = GetComponent<Mover>();
-        _groundDetector = GetComponent<GroundDetector>();
+        _inputReader = GetComponent<InputReader>();
         _playerAnimator = GetComponent<PlayerAnimator>();
         _flipper = GetComponent<Flipper>();
-        _attacker = GetComponent<Attacker>();
-
-        _damage = AttackDamage;
+        _healthHero = GetComponent<HealthHero>();
+        _damager = GetComponentInChildren<Damager>();
+        _groundDetector = GetComponentInChildren<GroundDetector>();
 
         _inputReader.MovePressed += Move;
         _inputReader.JumpPressed += Jump;
@@ -49,14 +45,21 @@ public class PlayerMovement : MonoBehaviour
         _groundDetector.Falling -= Fall;
     }
 
-    public void Move(float direction)
+    public void TakeDamage(float damage)
+    {
+        _playerAnimator.TakeHitAnumation();
+        _healthHero.HitHero(damage);
+        Debug.Log(_healthHero.HealthPlayer + " - health");
+    }
+
+    private void Move(float direction)
     {
         _flipper.SetDirection(direction);
         _mover.Move(direction);
         _playerAnimator.Move(direction);
     }
 
-    public void Jump()
+    private void Jump()
     {
         if (_groundDetector.InAir == false)
         {
@@ -65,19 +68,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Fall()
+    private void Fall()
     {
         _playerAnimator.FallAnimation();
     }
 
-    public void Land()
+    private void Land()
     {
         _playerAnimator.LandAnimation();
     }
 
-    public void Attack()
+    private void Attack()
     {
+        _damager.Hit(AttackDamage);
         _playerAnimator.AttackAnimation();
-        _attacker.Hit(_damage, offsetAttack);
     }
 }

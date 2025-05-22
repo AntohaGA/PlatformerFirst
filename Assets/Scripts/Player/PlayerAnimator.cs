@@ -7,6 +7,7 @@ public class PlayerAnimator : MonoBehaviour
     private static int s_isJump = Animator.StringToHash("isJump");
     private static int s_Attack = Animator.StringToHash("attack");
     private static int s_isFall = Animator.StringToHash("isFall");
+    private static int s_hit = Animator.StringToHash("hit");
 
     private Animator _animator;
 
@@ -39,5 +40,10 @@ public class PlayerAnimator : MonoBehaviour
     public void FallAnimation()
     {
         _animator.SetBool(s_isFall, true);
+    }
+
+    public void TakeHitAnumation()
+    {
+        _animator.SetTrigger(s_hit);
     }
 }

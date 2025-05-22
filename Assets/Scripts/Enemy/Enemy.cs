@@ -5,9 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Flipper))]
 [RequireComponent(typeof(EnemyAnimator))]
 [RequireComponent(typeof(Follower))]
-[RequireComponent(typeof(Attacker))]
-[RequireComponent(typeof(PlayerDetector))]
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamagable
 {
     private const float StartHealth = 100;
 
@@ -16,9 +14,13 @@ public class Enemy : MonoBehaviour
     private Flipper _flipper;
     private EnemyAnimator _animator;
     private Follower _follower;
+    private EnemyAttacker _enemyAttacker;
+
     private PlayerDetector _playerDetector;
+    private AttackDetector _attackDetector;
 
     private float _direction;
+    private float _speed;
     private float _health;
 
     private enum State
@@ -37,17 +39,22 @@ public class Enemy : MonoBehaviour
         _flipper = GetComponent<Flipper>();
         _animator = GetComponent<EnemyAnimator>();
         _follower = GetComponent<Follower>();
-        _playerDetector = GetComponent<PlayerDetector>();
+        _enemyAttacker = GetComponentInChildren<EnemyAttacker>();
+        _playerDetector = GetComponentInChildren<PlayerDetector>();
+        _attackDetector = GetComponentInChildren<AttackDetector>();
 
         _health = StartHealth;
         _playerDetector.CheckedPlayer += GoToPlayer;
         _playerDetector.LostPlayer += MoveByPoints;
+        _attackDetector.AttackPlayer += Attack;
+        _attackDetector.LostAttackPlayer += StopAttack;
     }
 
     public void TakeDamage(float damage)
     {
         _animator.HitAnimation();
         _health -= damage;
+        Debug.Log(_health + " - health");
     }
 
     private float GetDirection()
@@ -59,6 +66,9 @@ public class Enemy : MonoBehaviour
 
             case State.Follow:
                 return _follower.GetDirection();
+
+            case State.Attack:
+                return transform.right.x;
         }
 
         return _patroller.GetDirection();
@@ -73,22 +83,31 @@ public class Enemy : MonoBehaviour
 
     private void GoToPlayer(PlayerMovement playerMovement)
     {
-        Debug.Log("Got to player");
+      //  Debug.Log("Go to player");
         _state = State.Follow;
         _animator.RunAnimation();
     }
 
     private void MoveByPoints()
     {
-        Debug.Log("MoveByPoints");
+     //   Debug.Log("MoveByPoints");
         _state = State.Patrool;
         _animator.RunAnimation();
     }
 
     private void Attack()
     {
-        Debug.Log("Attack Player");
+     //   Debug.Log("Attack");
         _state = State.Attack;
+        _enemyAttacker.Attack();
         _animator.AttackAnimation();
+    }
+
+    private void StopAttack()
+    {
+        //  Debug.Log("StopAttack");
+        _state = State.Patrool;
+        _animator.StopAttackAnimation();
+        _enemyAttacker.StopAttack();
     }
 }
