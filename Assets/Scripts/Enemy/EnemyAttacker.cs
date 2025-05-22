@@ -9,12 +9,12 @@ public class EnemyAttacker : MonoBehaviour
 
     private IEnumerator _delayAttackCoroutine;
     private WaitForSeconds _delayAttackTime;
-    private Damager _hitter;
+    private Damager _damager;
     private bool _isAttack = false;
 
     private void Awake()
     {
-        _hitter = GetComponent<Damager>();
+        _damager = GetComponent<Damager>();
         _delayAttackTime = new WaitForSeconds(AttackDelay);
     }
 
@@ -40,7 +40,7 @@ public class EnemyAttacker : MonoBehaviour
         {
             yield return _delayAttackTime;
 
-            _hitter.Hit(Damage);
+            _damager.Hit(Damage);
         }
     }
 }

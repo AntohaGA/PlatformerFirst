@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour, IDamagable
     private AttackDetector _attackDetector;
 
     private float _direction;
-    private float _speed;
     private float _health;
 
     private enum State
@@ -83,21 +82,18 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void GoToPlayer(PlayerMovement playerMovement)
     {
-      //  Debug.Log("Go to player");
         _state = State.Follow;
         _animator.RunAnimation();
     }
 
     private void MoveByPoints()
     {
-     //   Debug.Log("MoveByPoints");
         _state = State.Patrool;
         _animator.RunAnimation();
     }
 
     private void Attack()
     {
-     //   Debug.Log("Attack");
         _state = State.Attack;
         _enemyAttacker.Attack();
         _animator.AttackAnimation();
@@ -105,7 +101,6 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void StopAttack()
     {
-        //  Debug.Log("StopAttack");
         _state = State.Patrool;
         _animator.StopAttackAnimation();
         _enemyAttacker.StopAttack();

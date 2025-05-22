@@ -9,17 +9,13 @@ public class PlayerDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out PlayerMovement player) && collision.isTrigger == false)
-        {
+        if (collision.TryGetComponent(out PlayerMovement player))
             CheckedPlayer?.Invoke(player);
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerMovement>() && collision.isTrigger == false)
-        {
+        if (collision.GetComponent<PlayerMovement>())
             LostPlayer?.Invoke();
-        }
     }
 }

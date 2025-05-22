@@ -4,24 +4,22 @@ using UnityEngine;
 public class Damager : MonoBehaviour
 {
     private CircleCollider2D _hitArea;
-    private Collider2D[] results;
+    private Collider2D[] _targetsInDmageArea;
 
     private void Awake()
     {
         _hitArea = GetComponent<CircleCollider2D>();
-        results = new Collider2D[5];
+        _targetsInDmageArea = new Collider2D[5];
     }
     public void Hit(float damage)
     {
         ContactFilter2D filter = new ContactFilter2D();
-        int countOverlap = _hitArea.Overlap(filter.NoFilter(), results);
+        int countOverlap = _hitArea.Overlap(filter.NoFilter(), _targetsInDmageArea);
 
         for (int i = 0; i < countOverlap; i++)
         {
-            if (results[i].TryGetComponent(out IDamagable component))
-            {
+            if (_targetsInDmageArea[i].TryGetComponent(out IDamagable component))
                 component.TakeDamage(damage);
-            }
         }
     }
 }

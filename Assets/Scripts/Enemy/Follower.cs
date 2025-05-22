@@ -17,9 +17,7 @@ public class Follower : MonoBehaviour
     public float GetDirection()
     {
         if (_player != null)
-        {
             return Math.Sign(_player.transform.position.x - transform.position.x);
-        }
 
         return 0;
     }

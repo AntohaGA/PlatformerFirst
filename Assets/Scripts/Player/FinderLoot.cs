@@ -16,13 +16,9 @@ public class FinderLoot : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out Coin coin))
-        {
             _coinCounter.AddCoin(coin);
-        }
 
         if (collision.TryGetComponent(out Health health))
-        {
             _healthHero.AddHealth(health);    
-        }
     }
 }
