@@ -35,12 +35,23 @@ public class Enemy : MonoBehaviour, IDamagable
         _enemyAttacker = GetComponentInChildren<EnemyAttacker>();
         _playerDetector = GetComponentInChildren<PlayerDetector>();
         _attackDetector = GetComponentInChildren<AttackDetector>();
-
         _health = StartHealth;
+    }
+
+    private void OnEnable()
+    {
         _playerDetector.CheckedPlayer += GoToPlayer;
         _playerDetector.LostPlayer += MoveByPoints;
         _attackDetector.AttackPlayer += Attack;
         _attackDetector.LostAttackPlayer += StopAttack;
+    }
+
+    private void OnDisable()
+    {
+        _playerDetector.CheckedPlayer -= GoToPlayer;
+        _playerDetector.LostPlayer -= MoveByPoints;
+        _attackDetector.AttackPlayer -= Attack;
+        _attackDetector.LostAttackPlayer -= StopAttack;
     }
 
     public void TakeDamage(float damage)
