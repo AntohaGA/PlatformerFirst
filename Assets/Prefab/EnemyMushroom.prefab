@@ -49,7 +49,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -160,8 +160,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.56, y: -0.18000984}
-  m_Radius: 0.4816314
+  m_Offset: {x: 0.65, y: -0.2}
+  m_Radius: 0.29
 --- !u!114 &4615285572769563760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83a8d4b9eb492b44876237513ef16b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layerForAttack: 3
+  _pointOffsetAttack: {x: 0.65, y: -0.2, z: 0}
+  _radiusAttack: 0.29
 --- !u!114 &9152197460219475224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +220,7 @@ GameObject:
   - component: {fileID: -1466047439049375011}
   - component: {fileID: 2111779555473250530}
   - component: {fileID: 4347766430455416155}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyMushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +236,7 @@ Transform:
   m_GameObject: {fileID: 6526701894214651924}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.034805, y: -8.350138, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -322,7 +325,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &8235058572420810008
 MonoBehaviour:
   m_ObjectHideFlags: 0

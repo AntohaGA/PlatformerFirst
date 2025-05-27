@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover))]
@@ -22,14 +23,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private float _direction;
     private float _health;
 
-    private enum State
-    {
-        Patrool,
-        Follow,
-        Attack
-    }
-
-    private State _state;
+    private Enum _state = new EnemyState();
 
     private void Awake()
     {
@@ -60,13 +54,13 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         switch (_state)
         {
-            case State.Patrool:
+            case EnemyState.Patrool:
                 return _patroller.GetDirection();
 
-            case State.Follow:
+            case EnemyState.Follow:
                 return _follower.GetDirection();
 
-            case State.Attack:
+            case EnemyState.Attack:
                 return transform.right.x;
         }
 
@@ -80,28 +74,28 @@ public class Enemy : MonoBehaviour, IDamagable
         _mover.Move(_direction);
     }
 
-    private void GoToPlayer(PlayerMovement playerMovement)
+    private void GoToPlayer(Transform player)
     {
-        _state = State.Follow;
+        _state = EnemyState.Follow;
         _animator.RunAnimation();
     }
 
     private void MoveByPoints()
     {
-        _state = State.Patrool;
+        _state = EnemyState.Patrool;
         _animator.RunAnimation();
     }
 
     private void Attack()
     {
-        _state = State.Attack;
+        _state = EnemyState.Attack;
         _enemyAttacker.Attack();
         _animator.AttackAnimation();
     }
 
     private void StopAttack()
     {
-        _state = State.Patrool;
+        _state = EnemyState.Patrool;
         _animator.StopAttackAnimation();
         _enemyAttacker.StopAttack();
     }

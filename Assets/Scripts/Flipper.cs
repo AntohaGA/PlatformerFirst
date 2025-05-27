@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Flipper : MonoBehaviour
 {
-    const float RotateAngle = 180;
+    private const float RotateAngle = 180;
 
     private Quaternion _rotateRight;
     private Quaternion _rotateLeft;

@@ -1,25 +1,33 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
 public class Damager : MonoBehaviour
 {
-    private CircleCollider2D _hitArea;
-    private Collider2D[] _targetsInDmageArea;
+    [SerializeField] private int _layerForAttack;
+    [SerializeField] private Vector3 _offsetAttack;
+    [SerializeField] private float _radiusAttack;
+    private Vector3 _centerOfCirleAttack;
 
-    private void Awake()
+    private void OnDrawGizmos()
     {
-        _hitArea = GetComponent<CircleCollider2D>();
-        _targetsInDmageArea = new Collider2D[5];
+        _centerOfCirleAttack.x = _offsetAttack.x * transform.right.x;
+        _centerOfCirleAttack.y = _offsetAttack.y;
+        _centerOfCirleAttack += transform.position;
+
+        Gizmos.DrawSphere(_centerOfCirleAttack, _radiusAttack);
     }
+
     public void Hit(float damage)
     {
-        ContactFilter2D filter = new ContactFilter2D();
-        int countOverlap = _hitArea.Overlap(filter.NoFilter(), _targetsInDmageArea);
+        _centerOfCirleAttack.x = _offsetAttack.x * transform.right.x;
+        _centerOfCirleAttack.y = _offsetAttack.y;
+        _centerOfCirleAttack += transform.position;
 
-        for (int i = 0; i < countOverlap; i++)
+        Collider2D[] results = Physics2D.OverlapCircleAll(_centerOfCirleAttack, _radiusAttack);
+
+        for (int i = 0; i < results.Length; i++)
         {
-            if (_targetsInDmageArea[i].TryGetComponent(out IDamagable component))
-                component.TakeDamage(damage);
+           if (results[i].TryGetComponent(out IDamagable damagable) && results[i].gameObject.layer == _layerForAttack)
+                damagable.TakeDamage(damage);
         }
     }
 }

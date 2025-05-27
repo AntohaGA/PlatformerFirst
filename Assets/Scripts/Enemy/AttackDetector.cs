@@ -9,13 +9,13 @@ public class AttackDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out PlayerMovement player))
+        if (collision.TryGetComponent(out PlayerAction player))
             AttackPlayer?.Invoke();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerMovement>())
+        if (collision.GetComponent<PlayerAction>())
             LostAttackPlayer?.Invoke();
     }
 }

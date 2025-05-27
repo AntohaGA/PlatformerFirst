@@ -1,9 +1,6 @@
 using UnityEngine;
 
-public class Loot : MonoBehaviour
+public abstract class Loot : MonoBehaviour
 {
-    public void Take()
-    {
-        Destroy(gameObject);
-    }
+    public abstract void TakeMe(ITakerLoot taker);
 }

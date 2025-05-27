@@ -8,6 +8,5 @@ public class CoinCounter : MonoBehaviour
     {
         _coinCount++;
         Debug.Log(_coinCount);
-        coin.Take();
     }
 }

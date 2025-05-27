@@ -4,10 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(PlayerAnimator))]
 [RequireComponent(typeof(Flipper))]
-[RequireComponent(typeof(FinderLoot))]
-[RequireComponent(typeof(HealthHero))]
+[RequireComponent(typeof(Bag))]
 [RequireComponent(typeof(CoinCounter))]
-public class PlayerMovement : MonoBehaviour, IDamagable
+public class PlayerAction : MonoBehaviour
 {
     private const float AttackDamage = 10;
 
@@ -15,7 +14,6 @@ public class PlayerMovement : MonoBehaviour, IDamagable
     private InputReader _inputReader;
     private PlayerAnimator _playerAnimator;
     private Flipper _flipper;
-    private HealthHero _healthHero;
     private GroundDetector _groundDetector;
     private Damager _damager;
 
@@ -25,10 +23,12 @@ public class PlayerMovement : MonoBehaviour, IDamagable
         _inputReader = GetComponent<InputReader>();
         _playerAnimator = GetComponent<PlayerAnimator>();
         _flipper = GetComponent<Flipper>();
-        _healthHero = GetComponent<HealthHero>();
         _damager = GetComponentInChildren<Damager>();
         _groundDetector = GetComponentInChildren<GroundDetector>();
+    }
 
+    private void OnEnable()
+    {
         _inputReader.MovePressed += Move;
         _inputReader.JumpPressed += Jump;
         _inputReader.AttackPressed += Attack;
@@ -36,20 +36,13 @@ public class PlayerMovement : MonoBehaviour, IDamagable
         _groundDetector.Falling += Fall;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         _inputReader.MovePressed -= Move;
         _inputReader.JumpPressed -= Jump;
         _inputReader.AttackPressed -= Attack;
         _groundDetector.Landed -= Land;
         _groundDetector.Falling -= Fall;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        _playerAnimator.TakeHitAnumation();
-        _healthHero.HitHero(damage);
-        Debug.Log(_healthHero.HealthPlayer + " - health");
     }
 
     private void Move(float direction)

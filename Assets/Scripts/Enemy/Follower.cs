@@ -4,7 +4,7 @@ using UnityEngine;
 public class Follower : MonoBehaviour
 {
     private PlayerDetector _detector;
-    private PlayerMovement _player;
+    private Transform _playerTransform;
 
     private void Awake()
     {
@@ -16,19 +16,19 @@ public class Follower : MonoBehaviour
 
     public float GetDirection()
     {
-        if (_player != null)
-            return Math.Sign(_player.transform.position.x - transform.position.x);
+        if (_playerTransform != null)
+            return Math.Sign(_playerTransform.position.x - transform.position.x);
 
         return 0;
     }
 
-    private void SetTarget(PlayerMovement player)
+    private void SetTarget(Transform player)
     {
-        _player = player;
+        _playerTransform = player;
     }
 
     private void RemoveTarget()
     {
-        _player = null;
+        _playerTransform = null;
     }
 }

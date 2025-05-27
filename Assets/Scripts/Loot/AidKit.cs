@@ -1,6 +1,6 @@
-public class Coin : Loot
+public class AidKit: Loot
 {
-    public float PriceCoin { get; private set; } = 1;
+    public float CountHealth { get; private set; } = 10;
 
     public override void TakeMe(ITakerLoot taker)
     {
