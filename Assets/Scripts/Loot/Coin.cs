@@ -1,8 +1,8 @@
 public class Coin : Loot
 {
-    public float PriceCoin { get; private set; } = 1;
+    public float Price { get; private set; } = 1;
 
-    public override void TakeMe(ITakerLoot taker)
+    public override void Take(ITakerLoot taker)
     {
         taker.Take(this);
     }

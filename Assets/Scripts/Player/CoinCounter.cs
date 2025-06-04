@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class CoinCounter : MonoBehaviour
 {
-    private int _coinCount = 0;
+    private float _allPrice = 0;
 
-    public void AddCoin(Coin coin)
+    public void Add(Coin coin)
     {
-        _coinCount++;
-        Debug.Log(_coinCount);
+        _allPrice += coin.Price;
+        Debug.Log(_allPrice);
     }
 }

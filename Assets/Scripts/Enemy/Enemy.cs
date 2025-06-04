@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Flipper))]
 [RequireComponent(typeof(EnemyAnimator))]
 [RequireComponent(typeof(Follower))]
+[RequireComponent(typeof(PlayerDetector))]
 public class Enemy : MonoBehaviour, IDamagable
 {
     private const float StartHealth = 100;
@@ -15,10 +16,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private Flipper _flipper;
     private EnemyAnimator _animator;
     private Follower _follower;
-    private EnemyAttacker _enemyAttacker;
-
     private PlayerDetector _playerDetector;
-    private AttackDetector _attackDetector;
 
     private float _direction;
     private float _health;
@@ -32,9 +30,7 @@ public class Enemy : MonoBehaviour, IDamagable
         _flipper = GetComponent<Flipper>();
         _animator = GetComponent<EnemyAnimator>();
         _follower = GetComponent<Follower>();
-        _enemyAttacker = GetComponentInChildren<EnemyAttacker>();
-        _playerDetector = GetComponentInChildren<PlayerDetector>();
-        _attackDetector = GetComponentInChildren<AttackDetector>();
+        _playerDetector = GetComponent<PlayerDetector>();
         _health = StartHealth;
     }
 
@@ -42,16 +38,16 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         _playerDetector.CheckedPlayer += GoToPlayer;
         _playerDetector.LostPlayer += MoveByPoints;
-        _attackDetector.AttackPlayer += Attack;
-        _attackDetector.LostAttackPlayer += StopAttack;
+        _playerDetector.AttackPlayer += Attack;
+        _playerDetector.LostAttackPlayer += StopAttack;
     }
 
     private void OnDisable()
     {
         _playerDetector.CheckedPlayer -= GoToPlayer;
         _playerDetector.LostPlayer -= MoveByPoints;
-        _attackDetector.AttackPlayer -= Attack;
-        _attackDetector.LostAttackPlayer -= StopAttack;
+        _playerDetector.AttackPlayer += Attack;
+        _playerDetector.LostAttackPlayer += StopAttack;
     }
 
     public void TakeDamage(float damage)
@@ -82,7 +78,11 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         _direction = GetDirection();
         _flipper.SetDirection(_direction);
-        _mover.Move(_direction);
+
+        if(_state.Equals(EnemyState.Attack))   
+            _mover.Move(0);
+        else
+            _mover.Move(_direction);
     }
 
     private void GoToPlayer(Transform player)
@@ -100,14 +100,12 @@ public class Enemy : MonoBehaviour, IDamagable
     private void Attack()
     {
         _state = EnemyState.Attack;
-        _enemyAttacker.Attack();
         _animator.AttackAnimation();
     }
 
     private void StopAttack()
     {
-        _state = EnemyState.Patrool;
+        _state = EnemyState.Follow;
         _animator.StopAttackAnimation();
-        _enemyAttacker.StopAttack();
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerDetector))]
 public class Follower : MonoBehaviour
 {
     private PlayerDetector _detector;
@@ -9,9 +10,18 @@ public class Follower : MonoBehaviour
     private void Awake()
     {
         _detector = GetComponentInChildren<PlayerDetector>();
+    }
 
+    private void OnEnable()
+    {
         _detector.CheckedPlayer += SetTarget;
         _detector.LostPlayer += RemoveTarget;
+    }
+
+    private void OnDisable()
+    {
+        _detector.CheckedPlayer -= SetTarget;
+        _detector.LostPlayer -= RemoveTarget;
     }
 
     public float GetDirection()

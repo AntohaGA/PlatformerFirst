@@ -4,8 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(PlayerAnimator))]
 [RequireComponent(typeof(Flipper))]
-[RequireComponent(typeof(Bag))]
-[RequireComponent(typeof(CoinCounter))]
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Damager))]
+[RequireComponent(typeof(GroundDetector))]
 public class PlayerAction : MonoBehaviour
 {
     private const float AttackDamage = 10;
@@ -16,6 +17,7 @@ public class PlayerAction : MonoBehaviour
     private Flipper _flipper;
     private GroundDetector _groundDetector;
     private Damager _damager;
+    private Health _health;
 
     private void Awake()
     {
@@ -23,8 +25,9 @@ public class PlayerAction : MonoBehaviour
         _inputReader = GetComponent<InputReader>();
         _playerAnimator = GetComponent<PlayerAnimator>();
         _flipper = GetComponent<Flipper>();
-        _damager = GetComponentInChildren<Damager>();
-        _groundDetector = GetComponentInChildren<GroundDetector>();
+        _damager = GetComponent<Damager>();
+        _health = GetComponent<Health>();
+        _groundDetector = GetComponent<GroundDetector>();
     }
 
     private void OnEnable()
@@ -34,6 +37,7 @@ public class PlayerAction : MonoBehaviour
         _inputReader.AttackPressed += Attack;
         _groundDetector.Landed += Land;
         _groundDetector.Falling += Fall;
+        _health.TakedHit += TakeHit;
     }
 
     private void OnDisable()
@@ -43,6 +47,7 @@ public class PlayerAction : MonoBehaviour
         _inputReader.AttackPressed -= Attack;
         _groundDetector.Landed -= Land;
         _groundDetector.Falling -= Fall;
+        _health.TakedHit -= TakeHit;    
     }
 
     private void Move(float direction)
@@ -75,5 +80,10 @@ public class PlayerAction : MonoBehaviour
     {
         _damager.Hit(AttackDamage);
         _playerAnimator.AttackAnimation();
+    }
+
+    private void TakeHit()
+    {
+        _playerAnimator.TakeHitAnumation();
     }
 }

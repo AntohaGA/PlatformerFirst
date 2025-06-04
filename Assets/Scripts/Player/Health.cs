@@ -1,30 +1,40 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerAnimator))]
+[RequireComponent(typeof(LootLifter))]
 public class Health : MonoBehaviour, IDamagable
 {
-    private PlayerAnimator _playerAnimator;
+    private LootLifter _sorter;
+
+    public event Action TakedHit;
 
     public float Count { get; private set; } = 100;
 
-    private void Awake()
+    private void OnEnable()
     {
-        _playerAnimator = GetComponent<PlayerAnimator>();
+        _sorter = GetComponent<LootLifter>();
+        _sorter.TakedAidKit += Add;
     }
 
-    public void AddHealth(AidKit health)
+    private void OnDisable()
     {
-        Count += health.CountHealth;
-        Debug.Log(Count);
+        _sorter.TakedAidKit -= Add;
     }
 
     public void TakeDamage(float damage)
     {
-        _playerAnimator.TakeHitAnumation();
-
         if (Count > 0 && damage > 0)
+        {
             Count -= damage;
+            Debug.Log(Count);
+            TakedHit?.Invoke();
+        }
+    }
 
+    private void Add(AidKit aidKit)
+    {
+        Count += aidKit.CountHealth;
+        Destroy(aidKit.gameObject);
         Debug.Log(Count);
     }
 }

@@ -1,28 +1,31 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CoinCounter))]
-[RequireComponent(typeof(Health))]
-[RequireComponent(typeof(LootChecker))]
-public class Bag : MonoBehaviour, ITakerLoot
+[RequireComponent(typeof(LootLifter))]
+public class Bag : MonoBehaviour
 {
     private CoinCounter _coins;
-    private Health _healthHero;
+    private LootLifter  _sorter;
 
     private void Awake()
     {
         _coins = GetComponent<CoinCounter>();
-        _healthHero = GetComponent<Health>();
+        _sorter = GetComponent<LootLifter>();
     }
 
-    public void Take(Coin coin)
+    private void OnEnable()
     {
-        _coins.AddCoin(coin);
+        _sorter.TakedCoin += AddCoin;
+    }
+
+    private void OnDisable()
+    {
+        _sorter.TakedCoin -= AddCoin;
+    }
+
+    public void AddCoin(Coin coin)
+    {
+        _coins.Add(coin);
         Destroy(coin.gameObject);
-    }
-
-    public void Take(AidKit health)
-    {
-        _healthHero.AddHealth(health);
-        Destroy(health.gameObject);
     }
 }

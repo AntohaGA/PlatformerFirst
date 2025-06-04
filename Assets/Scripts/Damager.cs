@@ -26,7 +26,8 @@ public class Damager : MonoBehaviour
 
         for (int i = 0; i < results.Length; i++)
         {
-           if (results[i].TryGetComponent(out IDamagable damagable) && results[i].gameObject.layer == _layerForAttack)
+           if (results[i].TryGetComponent(out IDamagable damagable)
+                                                        && results[i].gameObject.layer == _layerForAttack && results[i].isTrigger == false)
                 damagable.TakeDamage(damage);
         }
     }

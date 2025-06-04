@@ -8,12 +8,10 @@ public class SpawnerLoot : MonoBehaviour
     private void Start()
     {
         for (int i = 0; i < _spotsSpawn.Length; i++)
-        {
-            SpawnCoin(_spotsSpawn[i].transform);
-        }
+            SpawnLoot(_spotsSpawn[i].transform);
     }
 
-    private void SpawnCoin(Transform spawnSpoot)
+    private void SpawnLoot(Transform spawnSpoot)
     {
         Instantiate(_lootPrefab, spawnSpoot.position, Quaternion.identity);
     }

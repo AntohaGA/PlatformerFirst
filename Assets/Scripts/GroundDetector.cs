@@ -1,14 +1,13 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class GroundDetector : MonoBehaviour
 {
-    public bool InAir { get;private  set; }
-
+    private int _countGround = 0;
     public event Action Landed;
     public event Action Falling;
-
-    private int _countGround = 0;
+    public bool InAir { get; private set; }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
