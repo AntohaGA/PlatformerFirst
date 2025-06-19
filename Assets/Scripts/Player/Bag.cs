@@ -1,31 +1,40 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CoinCounter))]
-[RequireComponent(typeof(LootLifter))]
+[RequireComponent(typeof(LootSorter))]
+[RequireComponent(typeof(Health))]
 public class Bag : MonoBehaviour
 {
     private CoinCounter _coins;
-    private LootLifter  _sorter;
+    private LootSorter  _lootSorter;
+    private Health _health;
 
     private void Awake()
     {
         _coins = GetComponent<CoinCounter>();
-        _sorter = GetComponent<LootLifter>();
+        _lootSorter = GetComponent<LootSorter>();
+        _health = GetComponent<Health>();
     }
 
     private void OnEnable()
     {
-        _sorter.TakedCoin += AddCoin;
+        _lootSorter.TakedCoin += AddCoin;
+        _lootSorter.TakedAidKit += AddAidkit;
     }
 
     private void OnDisable()
     {
-        _sorter.TakedCoin -= AddCoin;
+        _lootSorter.TakedCoin -= AddCoin;
+        _lootSorter.TakedAidKit -= AddAidkit;
     }
 
-    public void AddCoin(Coin coin)
+    public void AddCoin(float price)
     {
-        _coins.Add(coin);
-        Destroy(coin.gameObject);
+        _coins.Add(price);
+    }
+
+    public void AddAidkit(float countHealth)
+    {
+        _health.Add(countHealth);
     }
 }

@@ -1494,7 +1494,7 @@ GameObject:
   - component: {fileID: 52030117}
   m_Layer: 0
   m_Name: MainCamera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1724,6 +1724,14 @@ PrefabInstance:
     - target: {fileID: 6526701894214651924, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
       propertyPath: m_Name
       value: EnemyMushroom (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2980,6 +2988,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 331350080562289614, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 355441726379689956, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0054092407
+      objectReference: {fileID: 0}
+    - target: {fileID: 969413192247737598, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1217708113252781646, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 52030120}
+    - target: {fileID: 1472412160624565572, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566983048848008545, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661176229763420760, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661176229763420760, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661176229763420760, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2259453501160220916, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
       propertyPath: m_Offset.x
       value: 0.968
@@ -3004,13 +3048,37 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3457392985212337507, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3457392985212337507, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587985537983740939, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 52030120}
+    - target: {fileID: 3926297528648779704, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926297528648779704, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926297528648779704, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3972023828395435713, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.224983
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3972023828395435713, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.042507
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3972023828395435713, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3033,6 +3101,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3972023828395435713, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -30.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972023828395435713, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -3042,6 +3114,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3972023828395435713, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4654619959120445682, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4654619959120445682, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749414526610201785, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5364607701425377135, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
@@ -3100,9 +3184,25 @@ PrefabInstance:
       propertyPath: _pointOffsetAttack.y
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 7112498856721858454, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7359112752331324832, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8181487398254326983, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8181487398254326983, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8866646089263833301, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
+      propertyPath: m_Value
+      value: 0.808
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -898444392604232991, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
@@ -3293,6 +3393,14 @@ PrefabInstance:
     - target: {fileID: 6526701894214651924, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
       propertyPath: m_Name
       value: EnemyMushroom (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3589,8 +3697,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e09700505d7aed419d249d531b9198e, type: 3}
---- !u!4 &1042345525 stripped
-Transform:
+--- !u!224 &1042345525 stripped
+RectTransform:
   m_CorrespondingSourceObject: {fileID: 3972023828395435713, guid: 11ba6c1e331c50e4ca055b60f8006371, type: 3}
   m_PrefabInstance: {fileID: 620695472}
   m_PrefabAsset: {fileID: 0}
@@ -4066,6 +4174,14 @@ PrefabInstance:
     - target: {fileID: 6526701894214651924, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
       propertyPath: m_Name
       value: EnemyMushroom
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8235058572420810008, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
       propertyPath: _speedX
@@ -4671,6 +4787,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyMushroom (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4911,6 +5035,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyMushroom (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916967146481225957, guid: 42dd05ab4cecc1c4a94e72f88c4bb433, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4946,7 +5078,7 @@ Transform:
   m_GameObject: {fileID: 1967158986}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

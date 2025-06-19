@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Damager : MonoBehaviour
 {
+    [SerializeField] private float _damage;
+
     [SerializeField] private int _layerForAttack;
     [SerializeField] private Vector3 _offsetAttack;
     [SerializeField] private float _radiusAttack;
@@ -16,7 +18,7 @@ public class Damager : MonoBehaviour
         Gizmos.DrawSphere(_centerOfCirleAttack, _radiusAttack);
     }
 
-    public void Hit(float damage)
+    public void Hit()
     {
         _centerOfCirleAttack.x = _offsetAttack.x * transform.right.x;
         _centerOfCirleAttack.y = _offsetAttack.y;
@@ -28,7 +30,7 @@ public class Damager : MonoBehaviour
         {
            if (results[i].TryGetComponent(out IDamagable damagable)
                                                         && results[i].gameObject.layer == _layerForAttack && results[i].isTrigger == false)
-                damagable.TakeDamage(damage);
+                damagable.TakeDamage(_damage);
         }
     }
 }

@@ -9,8 +9,6 @@ using UnityEngine;
 [RequireComponent(typeof(GroundDetector))]
 public class PlayerAction : MonoBehaviour
 {
-    private const float AttackDamage = 10;
-
     private Mover _mover;
     private InputReader _inputReader;
     private PlayerAnimator _playerAnimator;
@@ -37,7 +35,7 @@ public class PlayerAction : MonoBehaviour
         _inputReader.AttackPressed += Attack;
         _groundDetector.Landed += Land;
         _groundDetector.Falling += Fall;
-        _health.TakedHit += TakeHit;
+        _health.Changed += HealthChanged;
     }
 
     private void OnDisable()
@@ -47,7 +45,7 @@ public class PlayerAction : MonoBehaviour
         _inputReader.AttackPressed -= Attack;
         _groundDetector.Landed -= Land;
         _groundDetector.Falling -= Fall;
-        _health.TakedHit -= TakeHit;    
+        _health.Changed -= HealthChanged;    
     }
 
     private void Move(float direction)
@@ -78,12 +76,15 @@ public class PlayerAction : MonoBehaviour
 
     private void Attack()
     {
-        _damager.Hit(AttackDamage);
+        _damager.Hit();
         _playerAnimator.AttackAnimation();
     }
 
-    private void TakeHit()
+    private void HealthChanged(float change, float MaxValue)
     {
-        _playerAnimator.TakeHitAnumation();
+        if (change < 0)
+        {
+            _playerAnimator.TakeHitAnumation();
+        }
     }
 }

@@ -55,7 +55,7 @@ public class EnemyAttacker : MonoBehaviour
         {
             yield return _delayAttackTime;
 
-            _damager.Hit(Damage);
+            _damager.Hit();
         }
     }
 }

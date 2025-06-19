@@ -4,9 +4,9 @@ public class CoinCounter : MonoBehaviour
 {
     private float _allPrice = 0;
 
-    public void Add(Coin coin)
+    public void Add(float price)
     {
-        _allPrice += coin.Price;
+        _allPrice += price;
         Debug.Log(_allPrice);
     }
 }

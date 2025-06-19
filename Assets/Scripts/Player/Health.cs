@@ -1,40 +1,44 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(LootLifter))]
 public class Health : MonoBehaviour, IDamagable
 {
-    private LootLifter _sorter;
+    [SerializeField] private float StartHealth;
 
-    public event Action TakedHit;
+    private float _min = 0;
 
-    public float Count { get; private set; } = 100;
+    public event Action<float, float> Changed;
 
-    private void OnEnable()
+    public float Max { get; private set; }
+    public float Count { get; private set; }
+
+    private void Awake()
     {
-        _sorter = GetComponent<LootLifter>();
-        _sorter.TakedAidKit += Add;
-    }
-
-    private void OnDisable()
-    {
-        _sorter.TakedAidKit -= Add;
+        Count = StartHealth;
+        Max = StartHealth;
+        Debug.Log(Count);
     }
 
     public void TakeDamage(float damage)
     {
-        if (Count > 0 && damage > 0)
+        if (Count > _min && damage > 0)
         {
-            Count -= damage;
-            Debug.Log(Count);
-            TakedHit?.Invoke();
+            Count = Mathf.Clamp(Count - damage, _min, Max);
+            Changed?.Invoke(- damage, Max);
         }
     }
 
-    private void Add(AidKit aidKit)
+    public void Add(float countHealth)
     {
-        Count += aidKit.CountHealth;
-        Destroy(aidKit.gameObject);
-        Debug.Log(Count);
+        Debug.Log("Add?" + countHealth);
+
+        if (Count < Max && countHealth > 0)
+        {
+            Count = Mathf.Clamp(Count + countHealth, _min, Max);
+
+            Debug.Log("Add!" + Count);
+
+            Changed?.Invoke(countHealth, Max);
+        }
     }
 }

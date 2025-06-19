@@ -1,13 +1,13 @@
 using UnityEngine;
 
-[RequireComponent(typeof(LootLifter))]
+[RequireComponent(typeof(LootSorter))]
 public class LootFinder : MonoBehaviour
 {
-    private LootLifter _lootSorter;
+    private LootSorter _lootSorter;
 
     private void Awake()
     {
-        _lootSorter = GetComponent<LootLifter>();
+        _lootSorter = GetComponent<LootSorter>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

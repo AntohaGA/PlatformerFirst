@@ -7,10 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyAnimator))]
 [RequireComponent(typeof(Follower))]
 [RequireComponent(typeof(PlayerDetector))]
-public class Enemy : MonoBehaviour, IDamagable
+public class Enemy : MonoBehaviour
 {
-    private const float StartHealth = 100;
-
     private Mover _mover;
     private Patroller _patroller;
     private Flipper _flipper;
@@ -19,7 +17,6 @@ public class Enemy : MonoBehaviour, IDamagable
     private PlayerDetector _playerDetector;
 
     private float _direction;
-    private float _health;
 
     private Enum _state = new EnemyState();
 
@@ -31,7 +28,6 @@ public class Enemy : MonoBehaviour, IDamagable
         _animator = GetComponent<EnemyAnimator>();
         _follower = GetComponent<Follower>();
         _playerDetector = GetComponent<PlayerDetector>();
-        _health = StartHealth;
     }
 
     private void OnEnable()
@@ -53,8 +49,6 @@ public class Enemy : MonoBehaviour, IDamagable
     public void TakeDamage(float damage)
     {
         _animator.HitAnimation();
-        _health -= damage;
-        Debug.Log(_health + " - health");
     }
 
     private float GetDirection()

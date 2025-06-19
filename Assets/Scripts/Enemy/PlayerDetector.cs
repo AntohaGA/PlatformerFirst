@@ -5,8 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class PlayerDetector : MonoBehaviour
 {
-    private int _countPlayerIn = 0;
-     
+    private int _countPlayerIn = 0;  
 
     public event Action<Transform> CheckedPlayer;
     public event Action LostPlayer;
