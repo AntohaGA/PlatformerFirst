@@ -5,21 +5,20 @@ public class SliderHealthBar : HealthBar
 {
     [SerializeField] protected Slider Slider;
 
-    private Camera _camera;
+    private Quaternion _lookDirection;
 
     private void Start()
     {
         Slider.interactable = false;
         Slider.minValue = 0;
         Slider.maxValue = 1;
-        Debug.Log("Awake ----" + "Health.Count - " + Health.Count + "Health.Max - " + Health.Max);
         Slider.value = Health.Count / Health.Max;
-        _camera = Camera.main;
+        _lookDirection = Camera.main.transform.rotation;
     }
 
     private void Update()
     {
-        transform.rotation = _camera.transform.rotation;
+        transform.rotation = _lookDirection;
     }
 
     public override void OnChanged(float change, float maxValue)

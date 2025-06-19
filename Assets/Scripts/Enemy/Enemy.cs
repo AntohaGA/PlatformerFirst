@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyAnimator))]
 [RequireComponent(typeof(Follower))]
 [RequireComponent(typeof(PlayerDetector))]
+[RequireComponent(typeof(Health))]
 public class Enemy : MonoBehaviour
 {
     private Mover _mover;
@@ -15,6 +16,7 @@ public class Enemy : MonoBehaviour
     private EnemyAnimator _animator;
     private Follower _follower;
     private PlayerDetector _playerDetector;
+    private Health _health;
 
     private float _direction;
 
@@ -28,6 +30,7 @@ public class Enemy : MonoBehaviour
         _animator = GetComponent<EnemyAnimator>();
         _follower = GetComponent<Follower>();
         _playerDetector = GetComponent<PlayerDetector>();
+        _health = GetComponent<Health>();
     }
 
     private void OnEnable()
@@ -36,6 +39,7 @@ public class Enemy : MonoBehaviour
         _playerDetector.LostPlayer += MoveByPoints;
         _playerDetector.AttackPlayer += Attack;
         _playerDetector.LostAttackPlayer += StopAttack;
+        _health.Changed += TakeDamage;
     }
 
     private void OnDisable()
@@ -44,11 +48,7 @@ public class Enemy : MonoBehaviour
         _playerDetector.LostPlayer -= MoveByPoints;
         _playerDetector.AttackPlayer += Attack;
         _playerDetector.LostAttackPlayer += StopAttack;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        _animator.HitAnimation();
+        _health.Changed -= TakeDamage;
     }
 
     private float GetDirection()
@@ -101,5 +101,10 @@ public class Enemy : MonoBehaviour
     {
         _state = EnemyState.Follow;
         _animator.StopAttackAnimation();
+    }
+
+    private void TakeDamage(float change, float max)
+    {
+        _animator.HitAnimation();
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamagable
 {
-    [SerializeField] private float StartHealth;
+    [SerializeField] private float _startHealth;
 
     private float _min = 0;
 
@@ -14,9 +14,8 @@ public class Health : MonoBehaviour, IDamagable
 
     private void Awake()
     {
-        Count = StartHealth;
-        Max = StartHealth;
-        Debug.Log(Count);
+        Count = _startHealth;
+        Max = _startHealth;
     }
 
     public void TakeDamage(float damage)
@@ -30,14 +29,9 @@ public class Health : MonoBehaviour, IDamagable
 
     public void Add(float countHealth)
     {
-        Debug.Log("Add?" + countHealth);
-
         if (Count < Max && countHealth > 0)
         {
             Count = Mathf.Clamp(Count + countHealth, _min, Max);
-
-            Debug.Log("Add!" + Count);
-
             Changed?.Invoke(countHealth, Max);
         }
     }

@@ -9,8 +9,6 @@ public class SliderSlowHealthBar : SliderHealthBar
 
     public override void OnChanged(float change, float maxValue)
     {
-        Debug.Log("change - " + change +"maxValue - " + maxValue);
-
         if (_slowChangeCoroutine != null)
             StopCoroutine(_slowChangeCoroutine);
 
