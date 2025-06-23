@@ -506,8 +506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1865a31cb85c48848bef944da59f8bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _areaVampirism: {fileID: 242806750187449910}
-  _layerForVamp: 7
+  _areaAbility: {fileID: 242806750187449910}
+  _targetLayer: 7
 --- !u!1001 &1833530759012791056
 PrefabInstance:
   m_ObjectHideFlags: 0

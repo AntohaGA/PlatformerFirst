@@ -94,7 +94,7 @@ public class Vampirism : MonoBehaviour
 
     private void OneBiteVampirism()
     {
-        float speed = 0.1f;
+        float speed = 1f;
         IDamagable damagable;
 
         _centerAbility = transform.position;
@@ -104,6 +104,6 @@ public class Vampirism : MonoBehaviour
         damagable = _finderClosestEnemy.Get(results, _targetLayer);
 
         if (damagable != null)
-            _health.Add(damagable.TakeDamage(speed));
+            _health.Add(damagable.TakeDamage(speed * Time.deltaTime));
     }
 }
