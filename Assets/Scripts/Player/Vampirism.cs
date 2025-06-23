@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(FinderClosestEnemy))]
 public class Vampirism : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _areaVampirism;
-    [SerializeField] private float _layerForVamp;
+    [SerializeField] private SpriteRenderer _areaAbility;
+    [SerializeField] private float _targetLayer;
 
     private Vector3 _centerAbility;
     private float _radiusAbility = 3f;
@@ -21,26 +20,16 @@ public class Vampirism : MonoBehaviour
     private Coroutine _reloadCoroutine;
     private WaitForSeconds _reloadWait;
 
-    private bool _isActive;
-    private bool _isReload;
+    private bool _isActive = false;
+    private bool _isReload = false;
 
-    public event Action<float, float, float> ChangedStatusVampirism;
+    public event Action<float, float> ChangedState;
 
     private void Start()
     {
         _health = GetComponent<Health>();
         _finderClosestEnemy = GetComponent<FinderClosestEnemy>();
-        _isActive = false;
-        _isReload = false;
         _reloadWait = new WaitForSeconds(_reloadTime);
-    }
-
-    private void SwitchAreaAbility()
-    {
-        if (_areaVampirism.enabled)
-            _areaVampirism.enabled = false;
-        else
-            _areaVampirism.enabled = true;
     }
 
     public void On()
@@ -52,6 +41,14 @@ public class Vampirism : MonoBehaviour
 
             _vampirismCoroutine = StartCoroutine(VampirismProcess());
         }
+    }
+
+    private void SwitchAreaAbility()
+    {
+        if (_areaAbility.enabled)
+            _areaAbility.enabled = false;
+        else
+            _areaAbility.enabled = true;
     }
 
     private void ReloadAbility()
@@ -66,7 +63,7 @@ public class Vampirism : MonoBehaviour
     {
         float timerAbility = _vampirismTime;
 
-        ChangedStatusVampirism?.Invoke(_vampirismTime, 1, 0);
+        ChangedState?.Invoke(_vampirismTime, 0);
         SwitchAreaAbility();
         _isActive = true;
 
@@ -75,7 +72,7 @@ public class Vampirism : MonoBehaviour
             timerAbility -= Time.deltaTime;
 
             if (_health.Count < _health.Max)
-                OneShotVampirism();
+                OneBiteVampirism();
 
             yield return null;
         }
@@ -88,14 +85,14 @@ public class Vampirism : MonoBehaviour
     private IEnumerator ReloadProcess()
     {
         _isReload = true;
-        ChangedStatusVampirism?.Invoke(_reloadTime, 0, 1);
+        ChangedState?.Invoke(_reloadTime, 1);
 
         yield return _reloadWait;
 
         _isReload = false;
     }
 
-    private void OneShotVampirism()
+    private void OneBiteVampirism()
     {
         float speed = 0.1f;
         IDamagable damagable;
@@ -104,7 +101,7 @@ public class Vampirism : MonoBehaviour
         _centerAbility.y += 1;
 
         Collider2D[] results = Physics2D.OverlapCircleAll(_centerAbility, _radiusAbility);
-        damagable = _finderClosestEnemy.GetClosestEnemy(results, _layerForVamp);
+        damagable = _finderClosestEnemy.Get(results, _targetLayer);
 
         if (damagable != null)
             _health.Add(damagable.TakeDamage(speed));

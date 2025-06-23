@@ -19,31 +19,33 @@ public class VampirismBar : MonoBehaviour
 
     private void OnEnable()
     {
-        _vampirism.ChangedStatusVampirism += Change;
+        _vampirism.ChangedState += Change;
     }
 
     private void OnDisable()
     {
-        _vampirism.ChangedStatusVampirism -= Change;
+        _vampirism.ChangedState -= Change;
     }
 
-    private void Change(float targetTime, float startValue, float targetValue)
+    private void Change(float targetTime, float targetPercent)
     {
         if (_changeCoroutine != null)
             StopCoroutine(_changeCoroutine);
 
-        _changeCoroutine = StartCoroutine(SlowChangeValue(targetTime, startValue, targetValue));
+        _changeCoroutine = StartCoroutine(SlowChangeValue(targetTime, targetPercent));
     }
 
-    private IEnumerator SlowChangeValue(float changeTime, float startValue, float targetValue)
+    private IEnumerator SlowChangeValue(float changeTime, float targetPercent)
     {
-        float time = 0;
         float targetTime = 1;
+
+        float startValue = _slider.value;
+        float time = 0;
 
         while (time < targetTime)
         {
             time += Time.deltaTime / changeTime;
-            _slider.value = Mathf.Lerp(startValue, targetValue, time);
+            _slider.value = Mathf.Lerp(startValue, targetPercent, time);
 
             yield return null;
         }

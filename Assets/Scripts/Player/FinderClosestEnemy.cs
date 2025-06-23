@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FinderClosestEnemy : MonoBehaviour
 {
-    public IDamagable GetClosestEnemy(Collider2D[] targets, float targetLayer)
+    public IDamagable Get(Collider2D[] targets, float targetLayer)
     {
         float distant = 0;
         float minDistant = 0;
