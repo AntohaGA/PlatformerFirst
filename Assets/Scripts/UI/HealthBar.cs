@@ -14,5 +14,5 @@ public abstract class HealthBar : MonoBehaviour
         Health.Changed -= OnChanged;
     }
 
-    public abstract void OnChanged(float newValue, float maxValue);
+    public abstract void OnChanged(float change, float percentValue);
 }

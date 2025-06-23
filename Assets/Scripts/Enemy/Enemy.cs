@@ -103,7 +103,7 @@ public class Enemy : MonoBehaviour
         _animator.StopAttackAnimation();
     }
 
-    private void TakeDamage(float change, float max)
+    private void TakeDamage(float change,float percentValue)
     {
         _animator.HitAnimation();
     }

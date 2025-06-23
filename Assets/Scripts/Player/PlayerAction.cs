@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Damager))]
 [RequireComponent(typeof(GroundDetector))]
+[RequireComponent(typeof(Vampirism))]
 public class PlayerAction : MonoBehaviour
 {
     private Mover _mover;
@@ -16,6 +17,7 @@ public class PlayerAction : MonoBehaviour
     private GroundDetector _groundDetector;
     private Damager _damager;
     private Health _health;
+    private Vampirism _vampirism;
 
     private void Awake()
     {
@@ -26,6 +28,7 @@ public class PlayerAction : MonoBehaviour
         _damager = GetComponent<Damager>();
         _health = GetComponent<Health>();
         _groundDetector = GetComponent<GroundDetector>();
+        _vampirism = GetComponent<Vampirism>();
     }
 
     private void OnEnable()
@@ -33,6 +36,7 @@ public class PlayerAction : MonoBehaviour
         _inputReader.MovePressed += Move;
         _inputReader.JumpPressed += Jump;
         _inputReader.AttackPressed += Attack;
+        _inputReader.VampirismPressed += Vampirism;
         _groundDetector.Landed += Land;
         _groundDetector.Falling += Fall;
         _health.Changed += HealthChanged;
@@ -43,6 +47,7 @@ public class PlayerAction : MonoBehaviour
         _inputReader.MovePressed -= Move;
         _inputReader.JumpPressed -= Jump;
         _inputReader.AttackPressed -= Attack;
+        _inputReader.VampirismPressed -= Vampirism;
         _groundDetector.Landed -= Land;
         _groundDetector.Falling -= Fall;
         _health.Changed -= HealthChanged;    
@@ -80,11 +85,16 @@ public class PlayerAction : MonoBehaviour
         _playerAnimator.AttackAnimation();
     }
 
-    private void HealthChanged(float change, float MaxValue)
+    private void HealthChanged(float change, float percentValue)
     {
         if (change < 0)
         {
             _playerAnimator.TakeHitAnumation();
         }
+    }
+
+    private void Vampirism()
+    {
+        _vampirism.On();
     }
 }

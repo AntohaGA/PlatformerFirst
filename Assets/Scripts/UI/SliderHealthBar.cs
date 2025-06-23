@@ -21,8 +21,8 @@ public class SliderHealthBar : HealthBar
         transform.rotation = _lookDirection;
     }
 
-    public override void OnChanged(float change, float maxValue)
+    public override void OnChanged(float change, float percentValue)
     {
-        Slider.value = (Slider.value + change) / maxValue;
+        Slider.value = percentValue;
     }
 }

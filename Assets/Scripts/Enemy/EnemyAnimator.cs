@@ -20,7 +20,6 @@ public class EnemyAnimator : MonoBehaviour
 
     public void HitAnimation()
     {
-        Debug.Log("HitAnimation");
         _animator.SetTrigger(s_hit);
     }
 

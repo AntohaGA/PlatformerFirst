@@ -6,10 +6,12 @@ public class InputReader : MonoBehaviour
     private const string Horizontal = "Horizontal";
     private const KeyCode Jump = KeyCode.Space;
     private const KeyCode Attack = KeyCode.F;
+    private const KeyCode Vampirism = KeyCode.V;
 
     public event Action JumpPressed;
     public event Action<float> MovePressed;
     public event Action AttackPressed;
+    public event Action VampirismPressed;
 
     public void Update()
     {
@@ -21,5 +23,8 @@ public class InputReader : MonoBehaviour
 
         if (Input.GetKeyUp(Attack))
             AttackPressed?.Invoke();
+
+        if(Input.GetKeyUp(Vampirism))
+            VampirismPressed?.Invoke();
     }
 }

@@ -18,13 +18,22 @@ public class Health : MonoBehaviour, IDamagable
         Max = _startHealth;
     }
 
-    public void TakeDamage(float damage)
+    public float TakeDamage(float damage)
     {
+        float lossedHealth = 0;
+
         if (Count > _min && damage > 0)
         {
+            if (Count >= damage)
+                lossedHealth = damage;
+            else
+                lossedHealth = Count;
+
             Count = Mathf.Clamp(Count - damage, _min, Max);
-            Changed?.Invoke(- damage, Max);
+            Changed?.Invoke(-lossedHealth, Count / Max);
         }
+
+        return lossedHealth;
     }
 
     public void Add(float countHealth)
@@ -32,7 +41,7 @@ public class Health : MonoBehaviour, IDamagable
         if (Count < Max && countHealth > 0)
         {
             Count = Mathf.Clamp(Count + countHealth, _min, Max);
-            Changed?.Invoke(countHealth, Max);
+            Changed?.Invoke(countHealth, Count / Max);
         }
     }
 }
