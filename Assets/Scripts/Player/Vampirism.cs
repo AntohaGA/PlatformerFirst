@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(FinderClosestEnemy))]
 public class Vampirism : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _areaVampirism;
@@ -11,12 +12,11 @@ public class Vampirism : MonoBehaviour
 
     private Vector3 _centerAbility;
     private float _radiusAbility = 3f;
-
     private float _vampirismTime = 6f;
     private float _reloadTime = 4f;
 
     private Health _health;
-
+    private FinderClosestEnemy _finderClosestEnemy;
     private Coroutine _vampirismCoroutine;
     private Coroutine _reloadCoroutine;
     private WaitForSeconds _reloadWait;
@@ -29,17 +29,10 @@ public class Vampirism : MonoBehaviour
     private void Start()
     {
         _health = GetComponent<Health>();
+        _finderClosestEnemy = GetComponent<FinderClosestEnemy>();
         _isActive = false;
         _isReload = false;
         _reloadWait = new WaitForSeconds(_reloadTime);
-    }
-
-    private void OnDrawGizmos()
-    {
-     /*   _centerAbility = transform.position;
-        _centerAbility.y += 1;
-
-        Gizmos.DrawWireSphere(_centerAbility, _radiusAbility);*/
     }
 
     private void SwitchAreaAbility()
@@ -111,41 +104,9 @@ public class Vampirism : MonoBehaviour
         _centerAbility.y += 1;
 
         Collider2D[] results = Physics2D.OverlapCircleAll(_centerAbility, _radiusAbility);
-        damagable = GetClosestEnemy(results);
+        damagable = _finderClosestEnemy.GetClosestEnemy(results, _layerForVamp);
 
         if (damagable != null)
             _health.Add(damagable.TakeDamage(speed));
-    }
-
-    private IDamagable GetClosestEnemy(Collider2D[] results)
-    {
-        float distant = 0;
-        float minDistant = 0;
-        IDamagable closestEnemy = null;
-
-        foreach (Collider2D collider in results)
-        {
-            if (collider.TryGetComponent(out IDamagable damagable)
-                                         && collider.gameObject.layer == _layerForVamp && collider.isTrigger == false)
-            {
-                distant = Vector2.Distance(collider.transform.position, transform.position);
-
-                if (closestEnemy == null)
-                {
-                    closestEnemy = damagable;
-                    minDistant = distant;
-                }
-                else
-                {
-                    if (distant < minDistant)
-                    {
-                        closestEnemy = damagable;
-                        minDistant = distant;
-                    }
-                }
-            }
-        }
-
-        return closestEnemy;
     }
 }
