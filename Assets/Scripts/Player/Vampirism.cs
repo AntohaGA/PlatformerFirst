@@ -36,10 +36,10 @@ public class Vampirism : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        _centerAbility = transform.position;
+     /*   _centerAbility = transform.position;
         _centerAbility.y += 1;
 
-        Gizmos.DrawWireSphere(_centerAbility, _radiusAbility);
+        Gizmos.DrawWireSphere(_centerAbility, _radiusAbility);*/
     }
 
     private void SwitchAreaAbility()
@@ -107,28 +107,41 @@ public class Vampirism : MonoBehaviour
         float speed = 0.1f;
         IDamagable damagable;
 
-        Collider2D[] results = Physics2D.OverlapCircleAll(_centerAbility, _radiusAbility);
+        _centerAbility = transform.position;
+        _centerAbility.y += 1;
 
+        Collider2D[] results = Physics2D.OverlapCircleAll(_centerAbility, _radiusAbility);
         damagable = GetClosestEnemy(results);
 
         if (damagable != null)
             _health.Add(damagable.TakeDamage(speed));
-
     }
 
     private IDamagable GetClosestEnemy(Collider2D[] results)
     {
         float distant = 0;
+        float minDistant = 0;
         IDamagable closestEnemy = null;
 
-        foreach (Collider2D collder in results)
+        foreach (Collider2D collider in results)
         {
-            if (Vector2.Distance(collder.transform.position, transform.position) > distant)
+            if (collider.TryGetComponent(out IDamagable damagable)
+                                         && collider.gameObject.layer == _layerForVamp && collider.isTrigger == false)
             {
-                if (collder.TryGetComponent(out IDamagable damagable)
-                                             && collder.gameObject.layer == _layerForVamp && collder.isTrigger == false)
+                distant = Vector2.Distance(collider.transform.position, transform.position);
+
+                if (closestEnemy == null)
                 {
                     closestEnemy = damagable;
+                    minDistant = distant;
+                }
+                else
+                {
+                    if (distant < minDistant)
+                    {
+                        closestEnemy = damagable;
+                        minDistant = distant;
+                    }
                 }
             }
         }
